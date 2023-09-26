@@ -1,0 +1,24 @@
+server:
+  port: 8585
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings, health
+
+spring:
+  kafka:
+    topic: kafka-spring-boot.customers
+    consumer:
+      bootstrap-servers: localhost:19093,localhost:29093,localhost:39093
+      group-id: kafka-spring-boot.consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "kafka.sandbox.domain"
+    producer:
+      bootstrap-servers: localhost:19093,localhost:29093,localhost:39093
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
